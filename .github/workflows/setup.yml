@@ -26,13 +26,13 @@ jobs:
           echo $AWS_DEFAULT_REGION
           echo ${{github.ref_name}}
 
-      - name: Terraform workspace
-        run: |
-          make workspace WS=${{github.ref_name}}
-
       - name: Terraform init
         run: |
           make init
+
+      - name: Terraform workspace
+        run: |
+          make workspace WS=${{github.ref_name}}
       
       - name: Terraform plan
         run: |
