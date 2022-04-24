@@ -1,0 +1,42 @@
+name: test
+
+on: 
+  workflow_dispatch:
+  pull_request:
+    types:
+      - opened
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Show env
+        run: |
+          cat /etc/os-release
+          echo $AWS_DEFAULT_REGION
+          echo ${{github.ref_name}}
+
+      - name: Terraform workspace
+        run: |
+          make workspace WS=${{github.ref_name}}
+
+      - name: Terraform init
+        run: |
+          make init
+      
+      - name: Terraform plan
+        run: |
+          make plan
+      
+      - name: Terraform apply
+        run: |
+          make apply
+
+      - name: Terraform output
+        run: |
+          make output

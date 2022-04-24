@@ -1,0 +1,31 @@
+name: test
+
+on: 
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Show env
+        run: |
+          cat /etc/os-release
+          echo $AWS_DEFAULT_REGION
+          echo ${{github.ref_name}}
+
+      - name: Terraform workspace
+        run: |
+          make workspace WS=${{github.ref_name}}
+
+      - name: Terraform init
+        run: |
+          make init
+
+      - name: Terraform destroy
+        run: |
+          make destroy
