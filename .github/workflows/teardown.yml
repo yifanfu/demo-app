@@ -21,11 +21,11 @@ jobs:
         run: |
           cat /etc/os-release
           echo $AWS_DEFAULT_REGION
-          echo ${{github.head_ref}}
+          echo ${{github.ref_name}}
 
       - name: Terraform workspace
         run: |
-          make workspace WS=${{github.head_ref}}
+          make workspace WS=${{github.ref_name}}
 
       - name: Terraform init
         run: |
