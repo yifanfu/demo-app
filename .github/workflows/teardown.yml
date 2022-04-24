@@ -1,4 +1,4 @@
-name: test
+name: teardown
 
 on: 
   workflow_dispatch:
